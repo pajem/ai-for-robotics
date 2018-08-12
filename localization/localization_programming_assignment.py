@@ -75,6 +75,104 @@ def sense(p, world_map, sensor_result, sensor_right):
 
     return q
 
+# move_down
+# p = probability grid
+# steps = steps to move
+def move_down(p, steps):
+    # output probability
+    q = []
+    for i in range(len(p)):
+        q.append(p[(i - steps) % len(p)])
+    return q
+
+# move_up
+# p = probability grid
+# steps = steps to move
+def move_up(p, steps):
+    # convert the steps as a move_down action by inverting
+    # since the world is cyclic
+    num_rows = len(p)
+    steps_move_down = num_rows - steps
+    # perform move_down with the converted step count
+    q = move_down(p, steps_move_down)
+    return q
+
+# move_right
+# p = probability grid
+# steps = steps to move
+def move_right(p, steps):
+    q = []
+    # iterate over rows of the grid
+    for i in range(len(p)):
+        row=[]
+        # iterate over columns of the grid
+        for j in range(len(p[i])):
+            row.append(p[i][(j - steps) % len(p[i])])
+        q.append(row)
+    return q
+
+# move_left
+# p = probability grid
+# steps = steps to move
+def move_left(p, steps):
+    # convert the steps as a move_right action by inverting
+    # since the world is cyclic
+    num_columns = len(p[0])
+    steps_move_right = num_columns - steps
+    # perform move_down with the converted step count
+    q = move_right(p, steps_move_right)
+    return q
+
+# scalar_product
+# p = probability grid
+# factor = mulitplication factor
+def scalar_product(p, factor):
+    q = []
+    # iterate over rows of the grid
+    for i in range(len(p)):
+        row=[]
+        # iterate over columns of the grid
+        for j in range(len(p[i])):
+            row.append(p[i][j] * float(factor))
+        q.append(row)
+    return q
+
+# matrix_product
+# p1 = probability grid 1
+# p1 = probability grid 2
+def matrix_addition(p1, p2):
+    q = []
+    # iterate over rows of the grid
+    for i in range(len(p1)):
+        row=[]
+        # iterate over columns of the grid
+        for j in range(len(p1[i])):
+            row.append(p1[i][j] + p2[i][j])
+        q.append(row)
+    return q
+
+# move
+# p = probability grid
+# p_move = probability that the robot moved and did not stay in place
+def move(p, motion, p_move):
+    if (motion == [0, 0]):
+        p_after_move = p
+    elif (motion == [0, 1]):
+        p_after_move = move_right(p, 1)
+    elif (motion == [0, -1]):
+        p_after_move = move_left(p, 1)
+    elif (motion == [1, 0]):
+        p_after_move = move_down(p, 1)
+    elif (motion == [-1, 0]):
+        p_after_move = move_up(p, 1)
+    else:
+        # do not move
+        p_after_move = p
+
+    # total probability
+    q = matrix_addition(scalar_product(p_after_move, p_move), scalar_product(p, 1.0 - p_move))
+    return q
+
 def localize(colors,measurements,motions,sensor_right,p_move):
     # initializes p to a uniform distribution over a grid of the same dimensions as colors
     pinit = 1.0 / float(len(colors)) / float(len(colors[0]))
