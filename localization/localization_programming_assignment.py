@@ -43,6 +43,38 @@
 #  [1,0] - down
 #  [-1,0] - up
 
+# sense
+# p = probability grid
+# world_map = map of colorts
+# sensor_result = color read by sensor
+# sensor_right = probability that sensor is correct
+def sense(p, world_map, sensor_result, sensor_right):
+    # output probability
+    q = []
+
+    # total sum for normalization
+    total_sum = 0
+
+    # iterate over rows of the grid
+    for i in range(len(p)):
+        row=[]
+        # iterate over columns of the grid
+        for j in range(len(p[i])):
+            # update probability on grid based on sensor data
+            if (sensor_result == world_map[i][j]):
+                row.append(p[i][j] * sensor_right)
+            else:
+                row.append(p[i][j] * (1.0 - sensor_right))
+        q.append(row)
+        total_sum = total_sum + sum(row)
+
+    # normalize
+    for i in range(len(p)):
+        for j in range(len(p[i])):
+            q[i][j] = q[i][j]/total_sum
+
+    return q
+
 def localize(colors,measurements,motions,sensor_right,p_move):
     # initializes p to a uniform distribution over a grid of the same dimensions as colors
     pinit = 1.0 / float(len(colors)) / float(len(colors[0]))
