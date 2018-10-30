@@ -114,9 +114,6 @@ def eval(r, p):
 #
 # Your program should print out the result of
 # your two sense measurements.
-#
-# Don't modify the code below. Please enter
-# your code at the bottom.
 
 #myrobot = robot()
 #myrobot.set_noise(5.0, 0.1, 5.0)
@@ -134,9 +131,6 @@ def eval(r, p):
 # Your program should print out the length
 # of your list (don't cheat by making an
 # arbitrary list of 1000 elements!)
-#
-# Don't modify the code below. Please enter
-# your code at the bottom.
 
 N = 1000
 p = []
