@@ -136,6 +136,28 @@ N = 1000
 p = []
 
 for i in range(N):
-    p.append(robot())
+    x = robot()
+    x.set_noise(0.05, 0.05, 5.0)
+    p.append(x)
 
-print len(p)
+# Now we want to simulate robot
+# motion with our particles.
+# Each particle should turn by 0.1
+# and then move by 5. 
+
+for i in range(len(p)):
+    p[i] = p[i].move(0.1, 5.0)
+
+# Now we want to give weight to our 
+# particles. This program will print a
+# list of 1000 particle weights.
+
+myrobot = robot()
+myrobot = myrobot.move(0.1, 5.0)
+Z = myrobot.sense()
+
+w = []
+for i in range(len(p)):
+    w.append(p[i].measurement_prob(Z))
+
+print w
