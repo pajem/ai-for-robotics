@@ -1,20 +1,3 @@
-
-# Now add noise to your robot as follows:
-# forward_noise = 5.0, turn_noise = 0.1,
-# sense_noise = 5.0.
-#
-# Once again, your robot starts at 30, 50,
-# heading north (pi/2), then turns clockwise
-# by pi/2, moves 15 meters, senses,
-# then turns clockwise by pi/2 again, moves
-# 10 m, then senses again.
-#
-# Your program should print out the result of
-# your two sense measurements.
-#
-# Don't modify the code below. Please enter
-# your code at the bottom.
-
 from math import *
 import random
 
@@ -135,10 +118,30 @@ def eval(r, p):
 # Don't modify the code below. Please enter
 # your code at the bottom.
 
-myrobot = robot()
-myrobot.set_noise(5.0, 0.1, 5.0)
-myrobot.set(30, 50, pi/2)
-myrobot = myrobot.move(-pi/2, 15)
-print myrobot.sense()
-myrobot = myrobot.move(-pi/2, 10)
-print myrobot.sense()
+#myrobot = robot()
+#myrobot.set_noise(5.0, 0.1, 5.0)
+#myrobot.set(30, 50, pi/2)
+#myrobot = myrobot.move(-pi/2, 15)
+#print myrobot.sense()
+#myrobot = myrobot.move(-pi/2, 10)
+#print myrobot.sense()
+
+# Now we want to create particles,
+# p[i] = robot(). In this assignment, write
+# code that will assign 1000 such particles
+# to a list.
+#
+# Your program should print out the length
+# of your list (don't cheat by making an
+# arbitrary list of 1000 elements!)
+#
+# Don't modify the code below. Please enter
+# your code at the bottom.
+
+N = 1000
+p = []
+
+for i in range(N):
+    p.append(robot())
+
+print len(p)
